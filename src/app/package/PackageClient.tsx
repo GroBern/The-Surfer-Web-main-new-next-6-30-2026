@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -19,81 +19,177 @@ import Summary from '@/components/booking_engine/Summary';
 import BookingNavbar from '@/components/booking_engine/BookingNavbar';
 import BookingFooter from '@/components/booking_engine/BookingFooter';
 
-type PackageData = {
+type PackageMeta = {
   id: string;
   title: string;
   short: string;
   info: string;
-  includes: string[];
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  highlight: { value: string; label: string };
 };
 
-const PACKAGE_DATA: PackageData[] = [
+// Static, count-independent package metadata. Session counts (nights, lessons,
+// yoga) are derived from the selected stay length - see countsForNights() below.
+const PACKAGE_DATA: PackageMeta[] = [
   {
     id: '1',
     title: 'Moderate Surf',
     short: 'Lesson Package',
     info: 'Beginners L1 / L2 / Intermediate · or moderate surf guiding for advanced surfers',
-    includes: [
-      '07 nights accommodation',
-      '06 surf lessons or guiding sessions',
-      'Surf Theory',
-      'Everyday Breakfast',
-      'Dinner - Everyday except Sunday',
-      '02 complimentary yoga sessions',
-      'Free transport to different surf spots',
-      'Free use of surf boards during surf sessions',
-      'Small group surf teaching (max 6 per group)',
-      'Daily social fun activities',
-    ],
     icon: Waves,
-    highlight: { value: '06', label: 'Lessons' },
   },
   {
     id: '2',
     title: 'Full Surf',
     short: 'Lesson Package',
     info: 'Beginners L1 / L2 / Intermediate · or full surf guiding for advanced surfers',
-    includes: [
-      '07 nights accommodation',
-      '11 surf lessons or guiding sessions',
-      'Surf Theory',
-      'Everyday Breakfast',
-      'Dinner - Everyday except Sunday',
-      '02 complimentary yoga sessions',
-      'Free transport to different surf spots',
-      'Free use of surf boards during surf sessions',
-      'Small group surf teaching (max 6 per group)',
-      'Daily social fun activities',
-    ],
     icon: Activity,
-    highlight: { value: '11', label: 'Lessons' },
   },
   {
     id: '3',
     title: 'Surf & Yoga',
     short: 'Package',
     info: 'Surf lessons or surf guiding paired with daily yoga sessions',
-    includes: [
-      '07 nights accommodation',
-      'Morning or evening everyday yoga',
-      '06 surf lessons or guiding sessions',
-      'Surf Theory',
-      'Everyday Breakfast',
-      'Dinner - Everyday except Sunday',
-      'Free transport to different surf spots',
-      'Free use of surf boards during surf sessions',
-      'Small group surf teaching (max 6 per group)',
-      'Daily social fun activities',
-    ],
     icon: Sparkles,
-    highlight: { value: '7×', label: 'Yoga' },
   },
 ];
 
+type LessonCounts = {
+  full: number;
+  moderate: number;
+  yoga: number;
+  surfYoga: number;
+};
+
+const pad2 = (n: number) => String(Math.max(0, n)).padStart(2, '0');
+
+/**
+ * Official rates sheet: number of nights -> session counts.
+ *
+ * The arrival day (night 1) carries no surf or yoga *lesson*, but guests may join
+ * a complimentary yoga session that day. That is why:
+ *   - Moderate & Surf-&-Yoga surf lessons run one behind the night count (nights - 1),
+ *   - the complimentary-yoga column ramps on its own (slower) schedule, and
+ *   - the Full Surf column follows the camp's own (non-linear) lesson plan.
+ */
+const NIGHT_COUNTS: Record<number, LessonCounts> = {
+  1: { full: 0, moderate: 0, yoga: 1, surfYoga: 0 },
+  2: { full: 0, moderate: 0, yoga: 1, surfYoga: 0 },
+  3: { full: 4, moderate: 2, yoga: 1, surfYoga: 2 },
+  4: { full: 6, moderate: 3, yoga: 1, surfYoga: 3 },
+  5: { full: 7, moderate: 4, yoga: 2, surfYoga: 4 },
+  6: { full: 9, moderate: 5, yoga: 2, surfYoga: 5 },
+  7: { full: 11, moderate: 6, yoga: 2, surfYoga: 6 },
+  8: { full: 12, moderate: 7, yoga: 3, surfYoga: 7 },
+  9: { full: 14, moderate: 8, yoga: 3, surfYoga: 8 },
+  10: { full: 16, moderate: 9, yoga: 3, surfYoga: 9 },
+  11: { full: 18, moderate: 10, yoga: 3, surfYoga: 10 },
+  12: { full: 19, moderate: 11, yoga: 4, surfYoga: 11 },
+  13: { full: 21, moderate: 12, yoga: 4, surfYoga: 12 },
+  14: { full: 23, moderate: 13, yoga: 4, surfYoga: 13 },
+  15: { full: 24, moderate: 14, yoga: 4, surfYoga: 14 },
+  16: { full: 26, moderate: 15, yoga: 5, surfYoga: 15 },
+  17: { full: 28, moderate: 16, yoga: 5, surfYoga: 16 },
+  18: { full: 30, moderate: 17, yoga: 5, surfYoga: 17 },
+  19: { full: 31, moderate: 18, yoga: 5, surfYoga: 18 },
+  20: { full: 33, moderate: 19, yoga: 6, surfYoga: 19 },
+  21: { full: 35, moderate: 20, yoga: 6, surfYoga: 20 },
+  22: { full: 36, moderate: 21, yoga: 8, surfYoga: 21 },
+  23: { full: 38, moderate: 22, yoga: 8, surfYoga: 22 },
+  24: { full: 40, moderate: 23, yoga: 8, surfYoga: 23 },
+  25: { full: 42, moderate: 24, yoga: 8, surfYoga: 24 },
+  26: { full: 43, moderate: 25, yoga: 8, surfYoga: 25 },
+  27: { full: 44, moderate: 26, yoga: 8, surfYoga: 26 },
+  28: { full: 46, moderate: 27, yoga: 8, surfYoga: 27 },
+};
+
+const countsForNights = (nights: number): LessonCounts => {
+  if (nights <= 0) return { full: 0, moderate: 0, yoga: 0, surfYoga: 0 };
+  if (NIGHT_COUNTS[nights]) return NIGHT_COUNTS[nights];
+  // Stays longer than the sheet (> 28 nights) are rare; extend using the final
+  // weekly rate so the booking flow still produces sensible numbers.
+  const base = NIGHT_COUNTS[28];
+  const over = nights - 28;
+  return {
+    moderate: nights - 1,
+    surfYoga: nights - 1,
+    full: base.full + Math.round((over * 11) / 7),
+    yoga: base.yoga + Math.round((over * 2) / 7),
+  };
+};
+
+/** Build the dynamic "headline stat" + "What's included" list for a package. */
+const buildDetails = (
+  id: string,
+  nights: number,
+  c: LessonCounts,
+): { includes: string[]; highlight: { value: string; label: string } } => {
+  const accommodation = `${pad2(nights)} nights accommodation`;
+  const yogaLine = `${pad2(c.yoga)} complimentary yoga ${c.yoga === 1 ? 'session' : 'sessions'}`;
+  const tail = [
+    'Surf Theory',
+    'Everyday Breakfast',
+    'Dinner - Everyday except Sunday',
+    'Free transport to different surf spots',
+    'Free use of surf boards during surf sessions',
+    'Small group surf teaching (max 6 per group)',
+    'Daily social fun activities',
+  ];
+
+  if (id === '2') {
+    // Full Surf
+    return {
+      highlight: { value: pad2(c.full), label: 'Lessons' },
+      includes: [
+        accommodation,
+        `${pad2(c.full)} surf lessons or guiding sessions`,
+        tail[0],
+        tail[1],
+        tail[2],
+        yogaLine,
+        tail[3],
+        tail[4],
+        tail[5],
+        tail[6],
+      ],
+    };
+  }
+
+  if (id === '3') {
+    // Surf & Yoga - yoga every day (sunrise or sunset), surf lessons from day 2.
+    // The headline shows the surf-lesson count (per the sheet's SURF AND YOGA
+    // column); everyday yoga is listed separately in the includes.
+    return {
+      highlight: { value: pad2(c.surfYoga), label: 'Lessons' },
+      includes: [
+        accommodation,
+        'Morning or evening everyday yoga',
+        `${pad2(c.surfYoga)} surf lessons or guiding sessions`,
+        ...tail,
+      ],
+    };
+  }
+
+  // Moderate Surf (default, id === '1')
+  return {
+    highlight: { value: pad2(c.moderate), label: 'Lessons' },
+    includes: [
+      accommodation,
+      `${pad2(c.moderate)} surf lessons or guiding sessions`,
+      tail[0],
+      tail[1],
+      tail[2],
+      yogaLine,
+      tail[3],
+      tail[4],
+      tail[5],
+      tail[6],
+    ],
+  };
+};
+
 const PackagePage = () => {
   const [dateRange, setDateRange] = useState<string>('');
+  const [nights, setNights] = useState<number>(0);
   const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
   const [peopleCount, setPeopleCount] = useState(0);
   const [amounts, setAmounts] = useState<number[]>(new Array(PACKAGE_DATA.length).fill(0));
@@ -114,6 +210,17 @@ const PackagePage = () => {
       setSelectedRooms(storedRooms ? JSON.parse(storedRooms) : []);
     } catch {
       setSelectedRooms([]);
+    }
+
+    // Derive the stay length (nights) from the dates chosen on the Date step.
+    // These are written by DateClient as localISO date strings.
+    const start = localStorage.getItem('selectedStartDate');
+    const end = localStorage.getItem('selectedEndDate');
+    if (start && end) {
+      const s = new Date(start);
+      const e = new Date(end);
+      const diff = Math.round((e.getTime() - s.getTime()) / (1000 * 60 * 60 * 24));
+      setNights(Number.isFinite(diff) && diff > 0 ? diff : 0);
     }
 
     const storedCount = localStorage.getItem('peopleCount');
@@ -168,6 +275,9 @@ const PackagePage = () => {
   const filledCount = totalSelected();
   const selectionValid = peopleCount > 0 && filledCount === peopleCount;
   const remaining = Math.max(0, peopleCount - filledCount);
+
+  // Session counts auto-calculated from the selected stay length.
+  const counts = useMemo(() => countsForNights(nights), [nights]);
 
   return (
     <>
@@ -266,6 +376,7 @@ const PackagePage = () => {
                     const incDisabled = !canInc();
                     const Icon = pkg.icon;
                     const shouldGray = selectionValid && !isSelected;
+                    const details = buildDetails(pkg.id, nights, counts);
 
                     return (
                       <motion.div
@@ -305,7 +416,7 @@ const PackagePage = () => {
                           <div className="mt-3 flex flex-wrap items-center gap-1.5">
                             <div className="inline-flex items-baseline gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-br from-cyan-50/60 via-white to-white ring-1 ring-cyan-100/70">
                               <span className="font-[montserrat] text-lg font-bold tabular-nums text-gray-800">
-                                07
+                                {pad2(nights)}
                               </span>
                               <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-cyan-700">
                                 Nights
@@ -313,16 +424,22 @@ const PackagePage = () => {
                             </div>
                             <div className="inline-flex items-baseline gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-br from-cyan-50/60 via-white to-white ring-1 ring-cyan-100/70">
                               <span className="font-[montserrat] text-lg font-bold tabular-nums text-gray-800">
-                                {pkg.highlight.value}
+                                {details.highlight.value}
                               </span>
                               <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-cyan-700">
-                                {pkg.highlight.label}
+                                {details.highlight.label}
                               </span>
                             </div>
                           </div>
 
                           <p className="mt-2.5 text-xs text-gray-500 leading-relaxed">
                             {pkg.info}
+                          </p>
+
+                          {/* Day-1 logic note - arrival day has no surf lesson,
+                              but a complimentary yoga session is available. */}
+                          <p className="mt-1.5 text-[11px] text-gray-400 leading-snug italic">
+                            Arrival day: free yoga session - surf lessons start the next day.
                           </p>
                         </div>
 
@@ -358,7 +475,7 @@ const PackagePage = () => {
                                 className="overflow-hidden"
                               >
                                 <ul className="space-y-1.5 py-1">
-                                  {pkg.includes.map((item, i) => (
+                                  {details.includes.map((item, i) => (
                                     <li
                                       key={i}
                                       className="text-xs text-gray-600 flex items-start gap-2 leading-snug"
