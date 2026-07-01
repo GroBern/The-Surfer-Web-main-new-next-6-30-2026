@@ -1,0 +1,22 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Use `npm install` instead of `npm ci`. Some transitive, platform-specific
+        # optional deps (@unrs/resolver-binding-* -> @emnapi/*) resolve to different
+        # versions on the Linux build host than on the machine that generated the
+        # lock file, which makes the strict `npm ci` sync check fail. `npm install`
+        # reconciles the lock on the build host, so deploys stay reliable.
+        - npm install --cache .npm --prefer-offline
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .next/cache/**/*
+      - .npm/**/*
