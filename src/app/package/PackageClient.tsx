@@ -34,21 +34,21 @@ const PACKAGE_DATA: PackageMeta[] = [
     id: '1',
     title: 'Moderate Surf',
     short: 'Lesson Package',
-    info: 'Beginners L1 / L2 / Intermediate · or moderate surf guiding for advanced surfers',
+    info: 'Suitable for all levels – Complete Beginner (Level 0), Beginner (Level 1 & 2), Intermediate, and Surf Guiding for Advanced Surfers.',
     icon: Waves,
   },
   {
     id: '2',
     title: 'Full Surf',
     short: 'Lesson Package',
-    info: 'Beginners L1 / L2 / Intermediate · or full surf guiding for advanced surfers',
+    info: 'Suitable for – Complete Beginner (Level 0), Beginner (Level 1 & 2), and Intermediate.',
     icon: Activity,
   },
   {
     id: '3',
     title: 'Surf & Yoga',
     short: 'Package',
-    info: 'Surf lessons or surf guiding paired with daily yoga sessions',
+    info: 'Suitable for all levels – Complete Beginner (Level 0), Beginner (Level 1 & 2), Intermediate, and Surf Guiding for Advanced Surfers',
     icon: Sparkles,
   },
 ];
@@ -127,6 +127,7 @@ const buildDetails = (
   const yogaLine = `${pad2(c.yoga)} complimentary yoga ${c.yoga === 1 ? 'session' : 'sessions'}`;
   const tail = [
     'Surf Theory',
+    'Video Analysis',
     'Everyday Breakfast',
     'Dinner - Everyday except Sunday',
     'Free transport to different surf spots',
@@ -145,11 +146,12 @@ const buildDetails = (
         tail[0],
         tail[1],
         tail[2],
-        yogaLine,
         tail[3],
+        yogaLine,
         tail[4],
         tail[5],
         tail[6],
+        tail[7],
       ],
     };
   }
@@ -178,11 +180,12 @@ const buildDetails = (
       tail[0],
       tail[1],
       tail[2],
-      yogaLine,
       tail[3],
+      yogaLine,
       tail[4],
       tail[5],
       tail[6],
+      tail[7],
     ],
   };
 };
