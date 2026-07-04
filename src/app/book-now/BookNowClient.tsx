@@ -124,7 +124,7 @@ const DestinationCard = ({
         </p>
 
         {/* Select pill */}
-        <div className="mt-3 sm:mt-4 inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-gray-800 text-xs sm:text-sm font-semibold shadow-lg ring-1 ring-black/5 group-hover:bg-gradient-to-br group-hover:from-[#0a67b3] group-hover:to-[#0891b2] group-hover:text-white group-hover:shadow-cyan-500/40 transition-all duration-300">
+        <div className="mt-3 sm:mt-4 inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white text-gray-800 text-xs sm:text-sm font-semibold shadow-lg ring-1 ring-black/5 group-hover:bg-gradient-to-br group-hover:from-[var(--ss-c1)] group-hover:to-[var(--ss-c2)] group-hover:text-white group-hover:shadow-cyan-500/40 transition-all duration-300">
           Select
           <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </div>
@@ -162,6 +162,7 @@ const Country = () => {
       'travellerInfo',
       'isSubmitted',
       'selectedCamp',
+      'soulSurferFlow',
     ].forEach((k) => localStorage.removeItem(k));
   }, []);
 

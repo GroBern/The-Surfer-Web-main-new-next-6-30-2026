@@ -61,7 +61,7 @@ const Summary = ({
       {/* Header */}
       <div className="flex items-center justify-between gap-3 mb-1">
         <div className="flex items-center gap-2.5">
-          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/20">
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/20">
             <ClipboardList className="w-4 h-4 text-white" strokeWidth={2.25} />
           </span>
           <div>
@@ -217,7 +217,7 @@ const Summary = ({
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-sm">
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-sm">
                       <Receipt className="w-3.5 h-3.5 text-white" strokeWidth={2.25} />
                     </span>
                     <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-cyan-700">

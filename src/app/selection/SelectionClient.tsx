@@ -454,7 +454,7 @@ const Selection = () => {
                         {/* Room header */}
                         <div className="px-4 sm:px-5 py-4 bg-gradient-to-br from-cyan-50/40 via-white to-white border-b border-gray-100 flex items-center justify-between gap-3">
                           <div className="flex items-center gap-3">
-                            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/25">
+                            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/25">
                               <BedDouble className="w-4 h-4 text-white" strokeWidth={2.25} />
                             </div>
                             <div>
@@ -617,7 +617,7 @@ const Selection = () => {
                   </div>
                   <div className="relative h-2 rounded-full bg-gray-100 overflow-hidden">
                     <motion.div
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0a67b3] via-cyan-500 to-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--ss-c1)] via-cyan-500 to-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
                       initial={{ width: 0 }}
                       animate={{
                         width: `${(completedCount / totalCount) * 100}%`,
@@ -666,7 +666,7 @@ const Selection = () => {
                 <div
                   className={`group inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                     allFieldsFilled
-                      ? 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-lg shadow-[#0a67b3]/30 hover:shadow-xl hover:shadow-[#0a67b3]/50 hover:scale-[1.02] active:scale-100'
+                      ? 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-lg shadow-[var(--ss-c1)]/30 hover:shadow-xl hover:shadow-[var(--ss-c1)]/50 hover:scale-[1.02] active:scale-100'
                       : 'bg-gray-100 text-gray-400 ring-1 ring-gray-200 cursor-not-allowed'
                   }`}
                 >

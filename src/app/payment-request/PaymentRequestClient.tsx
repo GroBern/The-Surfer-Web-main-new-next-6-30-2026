@@ -83,7 +83,7 @@ const PaymentRequest = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="mx-auto mb-5 grid place-items-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 shadow-lg shadow-cyan-500/30">
+          <div className="mx-auto mb-5 grid place-items-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 shadow-lg shadow-cyan-500/30">
             <Loader2 className="w-7 h-7 animate-spin text-white" />
           </div>
           <div className="text-lg font-semibold text-slate-800">Loading your booking…</div>
@@ -104,7 +104,7 @@ const PaymentRequest = () => {
           <p className="text-slate-600 mb-6">{error}</p>
           <button
             onClick={() => router.push('/')}
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#0a67b3] to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200"
           >
             Return to Homepage
           </button>
@@ -270,7 +270,7 @@ const PaymentRequest = () => {
               {/* Panel header */}
               <div className="px-6 sm:px-7 pt-6 pb-5 border-b border-slate-100">
                 <div className="flex items-center gap-3">
-                  <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
+                  <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
                     <CreditCard className="w-5 h-5" />
                   </span>
                   <div>
@@ -307,7 +307,7 @@ const PaymentRequest = () => {
 
               {/* Deposit hero */}
               <div className="px-6 sm:px-7 pb-5">
-                <div className="relative rounded-2xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 p-5 text-white shadow-lg shadow-cyan-500/30 overflow-hidden">
+                <div className="relative rounded-2xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 p-5 text-white shadow-lg shadow-cyan-500/30 overflow-hidden">
                   <div aria-hidden className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/10 blur-xl" />
                   <div className="relative flex items-end justify-between">
                     <div>
@@ -326,7 +326,7 @@ const PaymentRequest = () => {
               <div className="px-6 sm:px-7 pb-6">
                 <button
                   onClick={handleSubmitPayment}
-                  className="group w-full bg-gradient-to-r from-[#0a67b3] to-cyan-500 text-white cursor-pointer py-4 rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99]"
+                  className="group w-full bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500 text-white cursor-pointer py-4 rounded-2xl font-semibold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99]"
                 >
                   <CreditCard className="w-5 h-5" />
                   Pay Deposit · €{depositAmount}
@@ -394,7 +394,7 @@ const SectionCard = ({ children }) => (
 
 const SectionHeading = ({ icon, title }) => (
   <div className="flex items-center gap-3 mb-6">
-    <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
+    <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
       {icon}
     </span>
     <h2 className="text-lg font-bold text-slate-900">{title}</h2>
@@ -420,7 +420,7 @@ const DetailSection = ({ icon, title, items }) => (
     <div className="space-y-2">
       {items.map((item, index) => (
         <div key={index} className="flex items-center gap-2.5 rounded-2xl bg-slate-50 px-4 py-2.5 text-slate-700">
-          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[#0a67b3] to-cyan-500 flex-shrink-0"></span>
+          <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 flex-shrink-0"></span>
           <span className="text-sm font-medium">{item}</span>
         </div>
       ))}

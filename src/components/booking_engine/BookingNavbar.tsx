@@ -33,22 +33,47 @@ const BookingNavbar = () => {
   const rawPathname = usePathname() ?? '/';
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Soul Surfer bookings skip Country + Camp, so their steps start one earlier.
+  const [soulSurfer, setSoulSurfer] = useState(false);
+
   useEffect(() => {
     const stored = localStorage.getItem('isSubmitted');
     if (stored) setIsSubmitted(JSON.parse(stored));
+    let isSoul = false;
+    try {
+      isSoul = localStorage.getItem('soulSurferFlow') === 'true';
+    } catch {
+      /* ignore */
+    }
+    setSoulSurfer(isSoul);
+    // Scope the Soul Surfer palette to this flow: the class on <html> activates
+    // the cyan/sky + --ss-c* overrides in globals.css. Removed when leaving the
+    // booking flow so the rest of the site keeps its original colours.
+    if (isSoul) {
+      document.documentElement.classList.add('ss-booking-theme');
+    }
+    return () => {
+      document.documentElement.classList.remove('ss-booking-theme');
+    };
   }, []);
 
   // Strip locale prefix and look up the current step
   const localeRegex = new RegExp(`^/(${routing.locales.join('|')})(?=/|$)`);
   const pathname =
     rawPathname.replace(localeRegex, '').replace(/\/$/, '') || '/';
-  const currentStep: StepMeta =
+  const baseStep: StepMeta =
     STEP_LOOKUP[pathname] ?? { num: 0, name: 'Booking' };
+  // Shift the number down one and shrink the total when the Camp step is skipped.
+  const currentStep: StepMeta =
+    soulSurfer && baseStep.num > 1
+      ? { ...baseStep, num: baseStep.num - 1 }
+      : baseStep;
+  const totalSteps = soulSurfer ? TOTAL_STEPS - 1 : TOTAL_STEPS;
 
   const isDestination = currentStep.num === 0;
   const progressPct = isDestination
     ? 4
-    : Math.max(8, (currentStep.num / TOTAL_STEPS) * 100);
+    : Math.max(8, (currentStep.num / totalSteps) * 100);
 
   return (
     <motion.header
@@ -60,7 +85,7 @@ const BookingNavbar = () => {
       {/* Top progress bar (thin animated cyan strip) */}
       <div className="absolute top-0 inset-x-0 h-0.5 bg-gray-100">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#0a67b3] via-cyan-500 to-cyan-400"
+          className="h-full bg-gradient-to-r from-[var(--ss-c1)] via-cyan-500 to-cyan-400"
           initial={{ width: 0 }}
           animate={{ width: `${progressPct}%` }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -109,7 +134,7 @@ const BookingNavbar = () => {
           {/* Step context pill - md+ */}
           <div className="hidden md:inline-flex items-center gap-2 pl-3 pr-4 py-1.5 rounded-full bg-cyan-50/70 ring-1 ring-cyan-100">
             <span className="text-[10px] font-bold tabular-nums tracking-[0.18em] uppercase text-cyan-700">
-              {isDestination ? 'Start' : `Step ${currentStep.num} / ${TOTAL_STEPS}`}
+              {isDestination ? 'Start' : `Step ${currentStep.num} / ${totalSteps}`}
             </span>
             <span aria-hidden="true" className="w-1 h-1 rounded-full bg-cyan-400" />
             <span className="text-xs font-bold text-gray-800 tracking-tight whitespace-nowrap">
@@ -146,7 +171,7 @@ const BookingNavbar = () => {
             rel="noreferrer"
             aria-label="Need help? Contact us"
             title="Need help?"
-            className="group inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white text-xs sm:text-sm font-semibold shadow-md shadow-[#0a67b3]/25 hover:shadow-lg hover:shadow-[#0a67b3]/40 hover:scale-105 transition-all duration-300"
+            className="group inline-flex items-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white text-xs sm:text-sm font-semibold shadow-md shadow-[var(--ss-c1)]/25 hover:shadow-lg hover:shadow-[var(--ss-c1)]/40 hover:scale-105 transition-all duration-300"
           >
             <HelpCircle className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" strokeWidth={2.25} />
             <span className="hidden sm:inline">Help</span>

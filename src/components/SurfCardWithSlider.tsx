@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Award } from 'lucide-react';
 
 type SurfCardProps = {
   images: string[];
@@ -65,12 +65,13 @@ const SurfCardWithSlider = ({ images, topic, body1, body2, link, index, tall, is
       {/* "Brand New" badge - top-left corner. Marks a newly launched camp. */}
       {isNew && (
         <div className="absolute top-4 left-4 z-30 pointer-events-none">
-          <span className="relative inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 px-3.5 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-white shadow-lg ring-1 ring-white/50">
+          <span className="relative inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 pl-1.5 pr-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.16em] text-black shadow-lg ring-1 ring-yellow-600/50">
             <span
               aria-hidden="true"
-              className="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 blur-md opacity-60 animate-pulse"
+              className="absolute -inset-1 rounded-full bg-yellow-400 blur-md opacity-60 animate-pulse"
             />
-            <span className="relative">Brand New</span>
+            <Award className="relative w-4 h-4" strokeWidth={2.5} />
+            <span className="relative">New</span>
           </span>
         </div>
       )}

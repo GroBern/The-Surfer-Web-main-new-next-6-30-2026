@@ -1,5 +1,52 @@
 @import "tailwindcss";
 
+/* =====================================================================
+   Soul Surfer palette — SCOPED to the Soul Surfer booking flow only.
+   BookingNavbar adds `.ss-booking-theme` to <html> when `soulSurferFlow` is
+   active, so these overrides recolour only the Soul Surfer booking steps and
+   leave the rest of the multi-camp site (and other camps' bookings) on their
+   original cyan/blue. Tailwind v4 renders colour utilities from CSS variables,
+   so redefining the cyan/sky scales here restyles every cyan and sky class;
+   the few literal-hex gradients are wired to the --ss-c* variables below.
+
+     #2B2722 espresso · #3A362E cocoa · #7E9A82 sage · #5F7A63 deep sage
+     #ECE8DD cream    · #D7D2C4 taupe
+   ===================================================================== */
+:root {
+  --ss-c1: #0a67b3; /* was deep blue   */
+  --ss-c2: #0891b2; /* was cyan-600ish */
+  --ss-c3: #0e7490; /* was dark cyan   */
+  --ss-c4: #cffafe; /* was light cyan  */
+}
+html.ss-booking-theme {
+  --color-cyan-50: #f4f2ec;
+  --color-cyan-100: #ece8dd;
+  --color-cyan-200: #d7d2c4;
+  --color-cyan-300: #b9bca7;
+  --color-cyan-400: #9aad9d;
+  --color-cyan-500: #7e9a82; /* sage — primary accent */
+  --color-cyan-600: #5f7a63; /* deep sage */
+  --color-cyan-700: #2b2722; /* espresso — dark/primary */
+  --color-cyan-800: #24211c;
+  --color-cyan-900: #1c1915;
+
+  --color-sky-50: #f4f2ec;
+  --color-sky-100: #ece8dd;
+  --color-sky-200: #d7d2c4;
+  --color-sky-300: #b9bca7;
+  --color-sky-400: #9aad9d;
+  --color-sky-500: #7e9a82;
+  --color-sky-600: #5f7a63;
+  --color-sky-700: #2b2722;
+  --color-sky-800: #24211c;
+  --color-sky-900: #1c1915;
+
+  --ss-c1: #2b2722; /* espresso */
+  --ss-c2: #7e9a82; /* sage     */
+  --ss-c3: #3a362e; /* cocoa    */
+  --ss-c4: #ece8dd; /* cream    */
+}
+
 /* =========================
    App.css — mobile-focused fixes
    ========================= */

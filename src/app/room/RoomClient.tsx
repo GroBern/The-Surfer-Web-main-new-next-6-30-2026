@@ -253,7 +253,7 @@ const RoomPage = () => {
               {/* People stepper card */}
               <div className="rounded-2xl bg-white ring-1 ring-gray-100 shadow-md p-5 sm:p-6 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/25">
+                  <div className="inline-flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/25">
                     <Users className="w-5 h-5 text-white" strokeWidth={2} />
                   </div>
                   <div>
@@ -287,7 +287,7 @@ const RoomPage = () => {
                     type="button"
                     onClick={() => handlePeopleCountChange(true)}
                     aria-label="Increase people"
-                    className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-md shadow-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-105 active:scale-95 transition-all duration-200"
+                    className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-md shadow-cyan-500/30 hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-105 active:scale-95 transition-all duration-200"
                   >
                     <Plus className="w-4 h-4" strokeWidth={2.5} />
                   </button>
@@ -404,7 +404,7 @@ const RoomPage = () => {
                                   className={`inline-flex items-center justify-center w-7 h-7 rounded-full font-semibold transition-all duration-200 ${
                                     cantAdd || shouldGray
                                       ? 'bg-gray-100 text-gray-300 cursor-not-allowed'
-                                      : 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-md shadow-cyan-500/30 hover:shadow-lg hover:scale-105 active:scale-95'
+                                      : 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-md shadow-cyan-500/30 hover:shadow-lg hover:scale-105 active:scale-95'
                                   }`}
                                 >
                                   <Plus className="w-3.5 h-3.5" strokeWidth={2.5} />
@@ -452,7 +452,7 @@ const RoomPage = () => {
                   </div>
                   <div className="relative h-2 rounded-full bg-gray-100 overflow-hidden">
                     <motion.div
-                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0a67b3] via-cyan-500 to-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+                      className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--ss-c1)] via-cyan-500 to-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"
                       initial={{ width: 0 }}
                       animate={{ width: `${(filledCapacity / peopleCount) * 100}%` }}
                       transition={{ duration: 0.4, ease: 'easeOut' }}
@@ -507,7 +507,7 @@ const RoomPage = () => {
                 <div
                   className={`group inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                     selectionComplete
-                      ? 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-lg shadow-[#0a67b3]/30 hover:shadow-xl hover:shadow-[#0a67b3]/50 hover:scale-[1.02] active:scale-100'
+                      ? 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-lg shadow-[var(--ss-c1)]/30 hover:shadow-xl hover:shadow-[var(--ss-c1)]/50 hover:scale-[1.02] active:scale-100'
                       : 'bg-gray-100 text-gray-400 ring-1 ring-gray-200 cursor-not-allowed'
                   }`}
                 >
