@@ -30,6 +30,11 @@ const Addon = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
   const [travellerInfo, setTravellerInfo] = useState<any[]>([{}]);
+  // Guards the persist effect below: stays false until the hydrate effect has
+  // loaded the saved booking from localStorage. Without it, the persist effect
+  // fires on mount with the initial zero/empty state and overwrites the real
+  // totalPrice/travellerInfo/addons saved by the previous step.
+  const [hydrated, setHydrated] = useState(false);
 
   // Hydrate
   useEffect(() => {
@@ -74,14 +79,18 @@ const Addon = () => {
     try {
       setTravellerInfo(info ? JSON.parse(info) : [{}]);
     } catch {}
+
+    setHydrated(true);
   }, []);
 
-  // Persist
+  // Persist — only after hydration, so we never overwrite the saved booking
+  // with the initial zero/empty state on mount.
   useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem('addons', JSON.stringify(selectedAddons));
     localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
     localStorage.setItem('travellerInfo', JSON.stringify(travellerInfo));
-  }, [selectedAddons, totalPrice, travellerInfo]);
+  }, [hydrated, selectedAddons, totalPrice, travellerInfo]);
 
   const handleFlightInfoChange = (name: string, value: any) => {
     setTravellerInfo((prev) => {

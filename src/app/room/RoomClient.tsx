@@ -111,6 +111,11 @@ const RoomPage = () => {
 
   const [peopleCount, setPeopleCount] = useState(0);
   const [selectedRooms, setSelectedRooms] = useState<{ id: number; count: number }[]>([]);
+  // Guards the persist effect below: stays false until the hydrate effect has
+  // loaded the saved selection. Without it, the persist effect fires on mount
+  // with the initial 0 / [] state and overwrites the peopleCount + rooms saved
+  // in a previous visit (data loss when navigating back to this step).
+  const [hydrated, setHydrated] = useState(false);
 
   // Hydrate state from localStorage on mount
   useEffect(() => {
@@ -118,7 +123,10 @@ const RoomPage = () => {
     if (storedPeople) setPeopleCount(parseInt(storedPeople));
 
     const stored = localStorage.getItem('selectedRooms');
-    if (!stored) return;
+    if (!stored) {
+      setHydrated(true);
+      return;
+    }
     try {
       const roomStrings: string[] = JSON.parse(stored);
       const restored = roomStrings
@@ -133,16 +141,18 @@ const RoomPage = () => {
     } catch {
       // ignore
     }
+    setHydrated(true);
   }, [roomsData]);
 
   useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem('peopleCount', String(peopleCount));
     const readableRooms = selectedRooms.map((r) => {
       const room = roomsData.find((room) => room.id === r.id);
       return `${r.count} x ${room?.title ?? ''}`;
     });
     localStorage.setItem('selectedRooms', JSON.stringify(readableRooms));
-  }, [peopleCount, selectedRooms, roomsData]);
+  }, [hydrated, peopleCount, selectedRooms, roomsData]);
 
   const getFilledCapacity = () =>
     selectedRooms.reduce((acc, r) => {
