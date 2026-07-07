@@ -208,7 +208,7 @@ const DatePage = () => {
         }
         .calendar-shell .react-datepicker__day:hover {
           background: #ecfeff !important;
-          color: #0e7490 !important;
+          color: var(--ss-c3) !important;
         }
         .calendar-shell .react-datepicker__day--keyboard-selected {
           background: transparent !important;
@@ -216,20 +216,20 @@ const DatePage = () => {
         }
         .calendar-shell .react-datepicker__day--today {
           font-weight: 700 !important;
-          color: #0a67b3 !important;
+          color: var(--ss-c1) !important;
           background: #f0f9ff !important;
         }
         .calendar-shell .react-datepicker__day--in-range,
         .calendar-shell .react-datepicker__day--in-selecting-range {
-          background: #cffafe !important;
-          color: #0e7490 !important;
+          background: var(--ss-c4) !important;
+          color: var(--ss-c3) !important;
         }
         .calendar-shell .react-datepicker__day--selected,
         .calendar-shell .react-datepicker__day--range-start,
         .calendar-shell .react-datepicker__day--range-end,
         .calendar-shell .react-datepicker__day--selecting-range-start,
         .calendar-shell .react-datepicker__day--selecting-range-end {
-          background: linear-gradient(135deg, #0a67b3, #0891b2) !important;
+          background: linear-gradient(135deg, var(--ss-c1), var(--ss-c2)) !important;
           color: #ffffff !important;
           font-weight: 700 !important;
           box-shadow: 0 4px 10px rgba(10, 103, 179, 0.35);
@@ -258,12 +258,12 @@ const DatePage = () => {
           width: 7px !important;
         }
         .calendar-shell .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
-          border-color: #0a67b3 !important;
+          border-color: var(--ss-c1) !important;
         }
         .calendar-shell .react-datepicker__highlighted-1,
         .calendar-shell .react-datepicker__day--highlighted {
-          background: #cffafe !important;
-          color: #0e7490 !important;
+          background: var(--ss-c4) !important;
+          color: var(--ss-c3) !important;
         }
       `}</style>
 
@@ -306,7 +306,7 @@ const DatePage = () => {
               <div className="calendar-shell flex-1 lg:min-h-0 flex flex-col lg:overflow-hidden rounded-2xl bg-white ring-1 ring-gray-100 shadow-lg p-4 sm:p-5">
                 {/* Header */}
                 <div className="flex items-center gap-2.5 mb-3 shrink-0">
-                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/20">
+                  <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/20">
                     <Calendar className="w-4 h-4 text-white" strokeWidth={2.25} />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -401,7 +401,7 @@ const DatePage = () => {
                   {/* Legend */}
                   <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[10px] text-gray-400">
                     <span className="inline-flex items-center gap-1">
-                      <span className="block w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2]" />
+                      <span className="block w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)]" />
                       Selected
                     </span>
                     <span className="inline-flex items-center gap-1">
@@ -493,14 +493,14 @@ const DatePage = () => {
                     </span>
                     <div className="flex items-center gap-2">
                       <div className="shrink-0 flex flex-col items-center">
-                        <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white text-[9px] font-bold shadow-md shadow-cyan-500/30">
+                        <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white text-[9px] font-bold shadow-md shadow-cyan-500/30">
                           IN
                         </div>
                         <span className="mt-1 text-[10px] font-semibold text-gray-500">
                           {formatDayName(startDate)}
                         </span>
                       </div>
-                      <div className="flex-1 relative h-1.5 rounded-full bg-gradient-to-r from-[#0a67b3] to-[#0891b2]">
+                      <div className="flex-1 relative h-1.5 rounded-full bg-gradient-to-r from-[var(--ss-c1)] to-[var(--ss-c2)]">
                         <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold text-cyan-700 whitespace-nowrap bg-white px-2">
                           {nightCount} {nightCount === 1 ? 'night' : 'nights'}
                         </span>
@@ -558,7 +558,7 @@ const DatePage = () => {
                 <div
                   className={`group inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                     canProceed
-                      ? 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-lg shadow-[#0a67b3]/30 hover:shadow-xl hover:shadow-[#0a67b3]/50 hover:scale-[1.02] active:scale-100'
+                      ? 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-lg shadow-[var(--ss-c1)]/30 hover:shadow-xl hover:shadow-[var(--ss-c1)]/50 hover:scale-[1.02] active:scale-100'
                       : 'bg-gray-100 text-gray-400 ring-1 ring-gray-200 cursor-not-allowed'
                   }`}
                 >

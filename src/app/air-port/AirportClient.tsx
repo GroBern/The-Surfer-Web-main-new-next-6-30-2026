@@ -30,6 +30,11 @@ const Addon = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedAddons, setSelectedAddons] = useState<Addon[]>([]);
   const [travellerInfo, setTravellerInfo] = useState<any[]>([{}]);
+  // Guards the persist effect below: stays false until the hydrate effect has
+  // loaded the saved booking from localStorage. Without it, the persist effect
+  // fires on mount with the initial zero/empty state and overwrites the real
+  // totalPrice/travellerInfo/addons saved by the previous step.
+  const [hydrated, setHydrated] = useState(false);
 
   // Hydrate
   useEffect(() => {
@@ -74,14 +79,18 @@ const Addon = () => {
     try {
       setTravellerInfo(info ? JSON.parse(info) : [{}]);
     } catch {}
+
+    setHydrated(true);
   }, []);
 
-  // Persist
+  // Persist — only after hydration, so we never overwrite the saved booking
+  // with the initial zero/empty state on mount.
   useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem('addons', JSON.stringify(selectedAddons));
     localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
     localStorage.setItem('travellerInfo', JSON.stringify(travellerInfo));
-  }, [selectedAddons, totalPrice, travellerInfo]);
+  }, [hydrated, selectedAddons, totalPrice, travellerInfo]);
 
   const handleFlightInfoChange = (name: string, value: any) => {
     setTravellerInfo((prev) => {
@@ -290,7 +299,7 @@ const Addon = () => {
                 <div
                   className={`group inline-flex w-full items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
                     isFormValid
-                      ? 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-lg shadow-[#0a67b3]/30 hover:shadow-xl hover:shadow-[#0a67b3]/50 hover:scale-[1.02] active:scale-100'
+                      ? 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-lg shadow-[var(--ss-c1)]/30 hover:shadow-xl hover:shadow-[var(--ss-c1)]/50 hover:scale-[1.02] active:scale-100'
                       : 'bg-gray-100 text-gray-400 ring-1 ring-gray-200 cursor-not-allowed'
                   }`}
                 >
@@ -378,7 +387,7 @@ const AddonCard = ({
       {/* Header */}
       <div className="px-4 sm:px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/25 shrink-0">
+          <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/25 shrink-0">
             <Icon className="w-5 h-5 text-white" strokeWidth={2} />
           </div>
           <div className="min-w-0">
@@ -406,7 +415,7 @@ const AddonCard = ({
             className={`group inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
               isActive
                 ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30 hover:bg-emerald-600'
-                : 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-md shadow-cyan-500/30 hover:shadow-lg hover:scale-105'
+                : 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-md shadow-cyan-500/30 hover:shadow-lg hover:scale-105'
             }`}
           >
             {isActive ? (

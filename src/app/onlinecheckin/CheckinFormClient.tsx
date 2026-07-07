@@ -49,7 +49,7 @@ function Section({ title, icon, children }) {
   return (
     <section className="bg-white rounded-[28px] border border-slate-100 ring-1 ring-slate-900/5 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_24px_50px_-30px_rgba(2,132,199,0.3)] p-6 sm:p-7">
       <div className="flex items-center gap-3 mb-6">
-        <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
+        <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
           {icon}
         </span>
         <h2 className="text-lg font-bold text-slate-900">{title}</h2>
@@ -155,7 +155,7 @@ export default function CheckinForm() {
       ctx.lineWidth = 2
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
-      ctx.strokeStyle = '#0a67b3'
+      ctx.strokeStyle = 'var(--ss-c1)'
     }
 
     setupCanvas()
@@ -648,7 +648,7 @@ export default function CheckinForm() {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || submitted}
-                className="rounded-xl bg-gradient-to-r from-[#0a67b3] to-cyan-500 text-white px-6 py-3 font-semibold cursor-pointer shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-0.5 disabled:from-slate-400 disabled:to-slate-500 disabled:shadow-none disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 transition-all duration-200"
+                className="rounded-xl bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500 text-white px-6 py-3 font-semibold cursor-pointer shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-0.5 disabled:from-slate-400 disabled:to-slate-500 disabled:shadow-none disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 transition-all duration-200"
               >
                 <Save size={16} /> {isSubmitting ? "Submitting..." : submitted ? "Submitted" : "Submit"}
               </button>
@@ -1025,7 +1025,7 @@ export default function CheckinForm() {
             <button
               onClick={handleSubmit}
               disabled={isSubmitting || submitted}
-              className="rounded-xl bg-gradient-to-r from-[#0a67b3] to-cyan-500 text-white px-5 py-3 font-semibold shadow-lg shadow-cyan-500/30 disabled:from-slate-400 disabled:to-slate-500 disabled:shadow-none disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 transition-all duration-200"
+              className="rounded-xl bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500 text-white px-5 py-3 font-semibold shadow-lg shadow-cyan-500/30 disabled:from-slate-400 disabled:to-slate-500 disabled:shadow-none disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 transition-all duration-200"
             >
               <Save size={16} /> {isSubmitting ? 'Submitting...' : submitted ? 'Submitted' : 'Submit'}
             </button>

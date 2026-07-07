@@ -255,7 +255,7 @@ const CheckoutPage = ({ bookingId }: { bookingId: string }) => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="mx-auto mb-5 grid place-items-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 shadow-lg shadow-cyan-500/30">
+          <div className="mx-auto mb-5 grid place-items-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 shadow-lg shadow-cyan-500/30">
             <Loader2 className="w-7 h-7 animate-spin text-white" />
           </div>
           <div className="text-lg font-semibold text-slate-800">Loading your booking…</div>
@@ -275,7 +275,7 @@ const CheckoutPage = ({ bookingId }: { bookingId: string }) => {
           <p className="text-slate-600 mb-6">The booking you're looking for doesn't exist or may have been removed.</p>
           <button
             onClick={() => router.push('/')}
-            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#0a67b3] to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200"
           >
             Return Home
           </button>
@@ -321,7 +321,7 @@ const CheckoutPage = ({ bookingId }: { bookingId: string }) => {
             <div className="bg-white rounded-[28px] border border-slate-100 ring-1 ring-slate-900/5 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_30px_60px_-28px_rgba(2,132,199,0.35)] overflow-hidden">
               <div className="px-6 sm:px-7 pt-6 pb-5 border-b border-slate-100">
                 <div className="flex items-center gap-3">
-                  <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
+                  <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
                     <CreditCard className="w-5 h-5" />
                   </span>
                   <div>
@@ -343,7 +343,7 @@ const CheckoutPage = ({ bookingId }: { bookingId: string }) => {
               </div>
 
               <div className="px-6 sm:px-7 pb-5">
-                <div className="relative rounded-2xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 p-5 text-white shadow-lg shadow-cyan-500/30 overflow-hidden">
+                <div className="relative rounded-2xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 p-5 text-white shadow-lg shadow-cyan-500/30 overflow-hidden">
                   <div aria-hidden className="absolute -top-8 -right-8 h-28 w-28 rounded-full bg-white/10 blur-xl" />
                   <div className="relative">
                     <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-100">Pay today · 25% deposit</div>
@@ -392,7 +392,7 @@ const CheckoutPage = ({ bookingId }: { bookingId: string }) => {
 
           <div className="lg:col-span-3 bg-white rounded-[28px] p-6 sm:p-8 border border-slate-100 ring-1 ring-slate-900/5 shadow-[0_1px_2px_rgba(16,24,40,0.04),0_24px_50px_-30px_rgba(2,132,199,0.3)]">
             <div className="flex items-center gap-3 mb-6">
-              <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#0a67b3] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
+              <span className="grid place-items-center w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 text-white shadow-md shadow-cyan-500/30">
                 <User className="w-5 h-5" />
               </span>
               <h2 className="text-lg font-bold text-slate-900">Billing Information</h2>
@@ -651,7 +651,7 @@ const CheckoutPage = ({ bookingId }: { bookingId: string }) => {
               <button
                 type="submit"
                 disabled={submitting || !isScriptLoaded}
-                className="group w-full bg-gradient-to-r from-[#0a67b3] to-cyan-500 text-white py-4 rounded-2xl cursor-pointer font-semibold hover:shadow-xl hover:shadow-cyan-500/40 shadow-lg shadow-cyan-500/30 disabled:from-slate-400 disabled:to-slate-500 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] flex items-center justify-center gap-2"
+                className="group w-full bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500 text-white py-4 rounded-2xl cursor-pointer font-semibold hover:shadow-xl hover:shadow-cyan-500/40 shadow-lg shadow-cyan-500/30 disabled:from-slate-400 disabled:to-slate-500 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-200 transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.99] flex items-center justify-center gap-2"
               >
                 {submitting ? (
                   <>

@@ -666,7 +666,7 @@ const Information = () => {
                     className={`group inline-flex w-full sm:w-auto items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 ${
                       isSubmitted || isLoading || emailMismatch
                         ? 'bg-gray-100 text-gray-400 ring-1 ring-gray-200 cursor-not-allowed'
-                        : 'bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white shadow-lg shadow-[#0a67b3]/30 hover:shadow-xl hover:shadow-[#0a67b3]/50 hover:scale-[1.02] active:scale-100'
+                        : 'bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white shadow-lg shadow-[var(--ss-c1)]/30 hover:shadow-xl hover:shadow-[var(--ss-c1)]/50 hover:scale-[1.02] active:scale-100'
                     }`}
                   >
                     {isLoading ? (
@@ -762,7 +762,7 @@ const Information = () => {
                     setShowAlert(false);
                     if (shouldReload) window.location.reload();
                   }}
-                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white text-sm font-semibold shadow-md shadow-cyan-500/25 hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
+                  className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white text-sm font-semibold shadow-md shadow-cyan-500/25 hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200"
                 >
                   OK
                 </button>
@@ -794,7 +794,7 @@ const FormCard = ({
     className="rounded-2xl bg-white ring-1 ring-gray-100 shadow-md p-5 sm:p-6"
   >
     <div className="flex items-center gap-3 mb-4">
-      <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/25">
+      <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/25">
         <Icon className="w-4 h-4 text-white" strokeWidth={2.25} />
       </div>
       <div>

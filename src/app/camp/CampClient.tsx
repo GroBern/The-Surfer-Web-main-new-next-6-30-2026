@@ -11,6 +11,7 @@ import {
   MapPin,
   Heart,
   Info,
+  Award,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import BookingNavbar from '@/components/booking_engine/BookingNavbar';
@@ -218,12 +219,13 @@ const CampCard = ({
             Shifts below the selected-checkmark when the card is selected. */}
         {pkg.isNew && (
           <div className={`absolute left-3 z-20 pointer-events-none ${isSelected ? 'top-14' : 'top-3'}`}>
-            <span className="relative inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 via-orange-500 to-pink-500 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.18em] text-white shadow-lg ring-1 ring-white/50">
+            <span className="relative inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 pl-1.5 pr-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-black shadow-lg ring-1 ring-yellow-600/50">
               <span
                 aria-hidden="true"
-                className="absolute -inset-1 rounded-full bg-gradient-to-r from-amber-400 to-pink-500 blur-md opacity-60 animate-pulse"
+                className="absolute -inset-1 rounded-full bg-yellow-400 blur-md opacity-60 animate-pulse"
               />
-              <span className="relative">Brand New</span>
+              <Award className="relative w-4 h-4" strokeWidth={2.5} />
+              <span className="relative">New</span>
             </span>
           </div>
         )}
@@ -338,7 +340,7 @@ const CampCard = ({
               <button
                 type="button"
                 onClick={onSelect}
-                className="mt-5 group w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] text-white text-xs sm:text-sm font-semibold shadow-md shadow-[#0a67b3]/30 hover:shadow-lg hover:shadow-[#0a67b3]/50 hover:scale-[1.02] transition-all duration-300"
+                className="mt-5 group w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] text-white text-xs sm:text-sm font-semibold shadow-md shadow-[var(--ss-c1)]/30 hover:shadow-lg hover:shadow-[var(--ss-c1)]/50 hover:scale-[1.02] transition-all duration-300"
               >
                 Continue with this camp
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -371,11 +373,11 @@ const CompareCard = ({ icon: Icon, title, tagline, bullets, index }: CompareCard
     {/* Left-edge brand accent bar */}
     <span
       aria-hidden="true"
-      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#0a67b3] via-cyan-400 to-[#0a67b3]"
+      className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--ss-c1)] via-cyan-400 to-[var(--ss-c1)]"
     />
 
     <header className="flex items-start gap-3 mb-3">
-      <div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[#0a67b3] to-[#0891b2] shadow-md shadow-cyan-500/20">
+      <div className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-[var(--ss-c2)] shadow-md shadow-cyan-500/20">
         <Icon className="w-5 h-5 text-white" strokeWidth={1.75} />
       </div>
       <div className="flex-1">
@@ -643,7 +645,7 @@ const Camp = () => {
                 aria-hidden="true"
                 animate={{ y: [0, 4, 0] }}
                 transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-                className="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[#0a67b3] to-cyan-500 text-white shadow-md shadow-cyan-500/40 group-hover:shadow-lg transition-shadow duration-300"
+                className="inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 text-white shadow-md shadow-cyan-500/40 group-hover:shadow-lg transition-shadow duration-300"
               >
                 <ChevronDown className="w-4 h-4" strokeWidth={2.5} />
               </motion.span>

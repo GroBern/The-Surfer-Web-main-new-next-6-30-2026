@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import {
@@ -44,9 +44,9 @@ const StepCircle = ({
     'relative w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center transition-all duration-300';
 
   const variants = {
-    done: 'bg-gradient-to-br from-[#0a67b3] to-cyan-500 shadow-md shadow-cyan-500/30',
+    done: 'bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 shadow-md shadow-cyan-500/30',
     active:
-      'bg-gradient-to-br from-[#0a67b3] to-cyan-500 shadow-lg shadow-cyan-500/50 ring-4 ring-cyan-200',
+      'bg-gradient-to-br from-[var(--ss-c1)] to-cyan-500 shadow-lg shadow-cyan-500/50 ring-4 ring-cyan-200',
     upcoming: 'bg-white border-2 border-gray-200',
   } as const;
 
@@ -92,7 +92,7 @@ const StepCircle = ({
       <span
         className={`mt-2 text-[10px] lg:text-xs font-semibold tracking-tight whitespace-nowrap transition-colors duration-300 ${
           state === 'active'
-            ? 'text-[#0a67b3]'
+            ? 'text-[var(--ss-c1)]'
             : state === 'done'
             ? 'text-gray-600'
             : 'text-gray-400'
@@ -110,7 +110,7 @@ const Connector = ({ filled }: { filled: 'full' | 'half' | 'none' }) => {
   return (
     <div className="flex-1 relative h-0.5 mx-1 mt-5 lg:mt-[22px] rounded-full bg-gray-200 overflow-hidden">
       <motion.div
-        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0a67b3] to-cyan-500"
+        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--ss-c1)] to-cyan-500"
         initial={{ width: 0 }}
         animate={{ width }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -123,6 +123,16 @@ const BookingFooter = () => {
   const rawPathname = usePathname() ?? '/';
   const localeRegex = new RegExp(`^/(${routing.locales.join('|')})(?=/|$)`);
   const pathname = rawPathname.replace(localeRegex, '') || '/';
+
+  // Soul Surfer bookings skip the Camp step, so its stepper starts at Date.
+  const [soulSurfer, setSoulSurfer] = useState(false);
+  useEffect(() => {
+    try {
+      setSoulSurfer(localStorage.getItem('soulSurferFlow') === 'true');
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   let activeStep: number;
   switch (pathname) {
@@ -159,8 +169,12 @@ const BookingFooter = () => {
       activeStep = 0;
   }
 
+  // Drop the Camp step and shift the active index down for the Soul Surfer flow.
+  const steps = soulSurfer ? STEPS.slice(1) : STEPS;
+  const active = soulSurfer ? Math.max(0, activeStep - 1) : activeStep;
+
   const progressPct =
-    STEPS.length <= 1 ? 0 : (activeStep / (STEPS.length - 1)) * 100;
+    steps.length <= 1 ? 0 : (active / (steps.length - 1)) * 100;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[11] bg-white rounded-t-3xl shadow-[0_-6px_30px_rgba(0,0,0,0.08)] border-t border-gray-100">
@@ -170,15 +184,15 @@ const BookingFooter = () => {
           <div className="flex items-center justify-between mb-2">
             <span className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.2em] uppercase text-cyan-700">
               <span className="block w-4 h-px bg-cyan-500" />
-              Step {activeStep + 1} / {STEPS.length}
+              Step {active + 1} / {steps.length}
             </span>
             <span className="text-[11px] font-bold tracking-tight text-gray-800">
-              {STEPS[activeStep].title}
+              {steps[active].title}
             </span>
           </div>
           <div className="relative h-2 w-full rounded-full bg-gray-100 overflow-hidden ring-1 ring-gray-200">
             <motion.div
-              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#0a67b3] via-cyan-500 to-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]"
+              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[var(--ss-c1)] via-cyan-500 to-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]"
               initial={{ width: 0 }}
               animate={{ width: `${progressPct}%` }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -188,21 +202,21 @@ const BookingFooter = () => {
 
         {/* Desktop: full stepper */}
         <div className="hidden md:flex items-start justify-between">
-          {STEPS.map((step, idx) => {
+          {steps.map((step, idx) => {
             const state: 'done' | 'active' | 'upcoming' =
-              idx < activeStep
+              idx < active
                 ? 'done'
-                : idx === activeStep
+                : idx === active
                 ? 'active'
                 : 'upcoming';
 
             const connectorFill: 'full' | 'half' | 'none' =
-              idx < activeStep ? 'full' : idx === activeStep ? 'half' : 'none';
+              idx < active ? 'full' : idx === active ? 'half' : 'none';
 
             return (
               <React.Fragment key={idx}>
                 <StepCircle step={step} index={idx} state={state} />
-                {idx < STEPS.length - 1 && (
+                {idx < steps.length - 1 && (
                   <Connector filled={connectorFill} />
                 )}
               </React.Fragment>
